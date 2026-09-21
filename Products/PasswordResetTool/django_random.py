@@ -64,9 +64,9 @@ def get_random_string(length=12,
         # is better than absolute predictability.
         random.seed(
             sha(
-                "%s%s%s" % (
+                ("%s%s%s" % (
                     random.getstate(),
                     time.time(),
-                    SECRET)
+                    SECRET)).encode('utf-8')
                 ).digest())
     return ''.join([random.choice(allowed_chars) for i in range(length)])

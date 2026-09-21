@@ -1,7 +1,7 @@
 """Initialize PasswordResetTool Product"""
 
 from Products.CMFCore import utils
-import PasswordResetTool
+from . import PasswordResetTool
 from zope.i18nmessageid import MessageFactory
 passwordresetMessageFactory = MessageFactory('passwordresettool')
 

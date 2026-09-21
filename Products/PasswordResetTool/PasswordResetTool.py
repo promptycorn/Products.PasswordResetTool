@@ -12,7 +12,7 @@ except ImportError:
 from Products.CMFCore.utils import UniqueObject
 from Products.CMFCore.utils import getToolByName
 from OFS.SimpleItem import SimpleItem
-from App.class_init import InitializeClass
+from AccessControl.class_init import InitializeClass
 from App.special_dtml import DTMLFile
 from AccessControl import ClassSecurityInfo
 from AccessControl import ModuleSecurityInfo
@@ -26,7 +26,7 @@ except ImportError:
     get_member_by_login_name = None
 from Products.PasswordResetTool import django_random
 
-from interfaces.portal_password_reset import portal_password_reset as IPWResetTool
+from .interfaces.portal_password_reset import portal_password_reset as IPWResetTool
 
 import datetime
 import time
@@ -278,7 +278,7 @@ class PasswordResetTool (UniqueObject, SimpleItem):
         """Destroys all expired reset request records.
         Parameter controls how many days past expired it must be to disappear.
         """
-        for key, record in self._requests.items():
+        for key, record in list(self._requests.items()):
             stored_user, expiry = record
             if self.expired(expiry, DateTime() - days):
                 del self._requests[key]
@@ -300,7 +300,7 @@ class PasswordResetTool (UniqueObject, SimpleItem):
         # this is the informal UUID algorithm of
         # http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/213761
         # by Carl Free Jr
-        t = long(time.time() * 1000)
+        t = int(time.time() * 1000)
         r = django_random.get_random_string(64)
         try:
             a = socket.gethostbyname(socket.gethostname())
@@ -308,7 +308,7 @@ class PasswordResetTool (UniqueObject, SimpleItem):
             # if we can't get a network address, just imagine one
             a = django_random.get_random_string(64)
         data = str(t) + ' ' + str(r) + ' ' + str(a)
-        data = md5(data).hexdigest()
+        data = md5(data.encode('utf-8')).hexdigest()
         return str(data)
 
     security.declarePrivate('expirationDate')
