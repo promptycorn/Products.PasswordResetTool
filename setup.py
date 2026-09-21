@@ -1,6 +1,9 @@
-from setuptools import setup, find_packages
+from pathlib import Path
 
-version = '2.2.4'
+from setuptools import find_packages
+from setuptools import setup
+
+version = (Path(__file__).parent / 'Products' / 'PasswordResetTool' / 'version.txt').read_text().strip()
 
 setup(
     name='Products.PasswordResetTool',
@@ -42,7 +45,7 @@ setup(
         'Products.CMFCore',
         'Acquisition',
         'DateTime',
-        'Zope2',
+        'Zope',
         'plone.app.registry'
     ],
     )
