@@ -18,7 +18,10 @@ from AccessControl import ClassSecurityInfo
 from AccessControl import ModuleSecurityInfo
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.permissions import ManagePortal
-from Products.CMFPlone.interfaces import ISecuritySchema
+try:
+    from Products.CMFPlone.interfaces import ISecuritySchema
+except ImportError:
+    from plone.app.controlpanel.security import ISecuritySchema
 try:
     from Products.CMFPlone.RegistrationTool import get_member_by_login_name
 except ImportError:
