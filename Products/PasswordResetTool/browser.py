@@ -7,7 +7,7 @@ from zope.i18n import translate
 
 from Products.PasswordResetTool.interfaces import IPasswordResetToolView
 from Products.PasswordResetTool import passwordresetMessageFactory as _
-from email.Header import Header
+from email.header import Header
 
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
@@ -31,7 +31,7 @@ class PasswordResetToolView(BrowserView):
 
     def encode_mail_header(self, text):
         """ Encodes text into correctly encoded email header """
-        return Header(safe_unicode(text), 'utf-8')
+        return Header(safe_unicode(text), 'utf-8').encode()
 
     def encoded_mail_sender(self):
         """ returns encoded version of Portal name <portal_email> """

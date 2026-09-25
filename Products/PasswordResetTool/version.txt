@@ -1,1 +1,1 @@
-2.2.4.post2+pyntra
+2.2.4.post3+pyntra
